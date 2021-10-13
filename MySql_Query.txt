@@ -1,0 +1,79 @@
+1. Create MySQL Database of your choice which include 4-5 tables
+----------------------
+mysql> CREATE DATABASE SCHOOL;
+MYSQL> USE SCHOOL;
+------------------------
+MYSQL>CREATE TABLE student_detail (
+  student_id INT NOT NULL,
+  student_name VARCHAR(45) NOT NULL,
+  course_id VARCHAR(45) NOT NULL);
+-----------------------
+mysql>CREATE TABLE course_detail (
+  course_id VARCHAR(25) NOT NULL,
+  course_name VARCHAR(45) NOT NULL,
+  PRIMARY KEY (course_id));
+----------------------
+mysql>CREATE TABLE teacher_detail (
+  teacher_id INT NOT NULL,
+  course_id VARCHAR(45) NOT NULL,
+  teacher_name VARCHAR(45) NOT NULL);
+----------------------------------------------------------------------
+
+2. Add primary key and foreign key constrains.
+
+mysql>ALTER TABLE student_detail
+  ADD PRIMARY KEY (student_id);
+
+mysql>ALTER TABLE student_detail 
+  ADD FOREIGN KEY (course_id)
+  REFERENCES course_detail (course_id);
+----------------------------------------------------------------------
+
+3.Add composite primary key to any one of your table
+
+mysql>ALTER TABLE teacher_detail 
+	ADD PRIMARY KEY (teacher_id, teacher_name);
+----------------------------------------------------------------------
+4.Write a query to change the column name ,data types.
+
+mysql>ALTER TABLE teacher_detail RENAME COLUMN teacher_id TO  T_Id ; 
+
+mysql>ALTER TABLE teacher_detail    
+MODIFY T_Id VARCHAR(45) NOT NULL;  
+
+---------------------------------------------------------------------
+5.Write a query to add a default value to specific column
+
+mysql>ALTER TABLE student_detail ALTER COLUMN course_id VARCHAR(45) NOT NULL DEFAULT 'ART' ;
+
+##added a default value 'ART' to column course_id in student_detail table###
+----------------------------------------------------------------------
+6.Add indexes. Also add index on a  column  having datatype as varchar
+
+mysql>ALTER TABLE teacher_detail 
+	ADD INDEX T_index (T_id ,course_id, teacher_name);
+
+----------------------------------------------------------------------
+
+7.Insert some data to the tables created via query
+
+mysql>INSERT INTO course_detail (course_id, course_name) VALUES ('SCI', 'SCIENCE')
+mysql>INSERT INTO course_detail (course_id, course_name) VALUES('COM', 'COMMERCE')
+mysql>INSERT INTO course_detail (course_id, course_name) VALUES('ART', 'ARTS')
+
+mysql>INSERT INTO student_detail (student_id, student_name, course_id) VALUES (1, 'VIDYA', 'SCI');
+mysql>INSERT INTO student_detail (student_id, student_name, course_id) VALUES(2, 'SURAJ', 'COM');
+mysql>INSERT INTO student_detail (student_id, student_name, course_id) VALUES(3, 'DIVYA', 'ART');
+mysql>INSERT INTO student_detail (student_id, student_name, course_id) VALUES(4, 'SHAM', 'COM');
+mysql>INSERT INTO student_detail (student_id, student_name, course_id) VALUES(5, 'GAYU', 'SCI');
+mysql>INSERT INTO student_detail (student_id, student_name, course_id) VALUES(6, 'FIZA','ART');
+
+------------------------------------------------------------------------
+
+8.Add unique constrains on single as well as multiple columns
+
+mysql>ALTER TABLE teacher_detail 
+ADD CONSTRAINT unique_t_name UNIQUE (teacher_id,teacher_name);
+
+------------------------------------------------------------------------
+9.Try to insert multiple records at a time along with the duplicate values for the columns having unique constrains without any error prompt
